@@ -1,0 +1,30 @@
+<app-read-dinosaurs [data]="dinosaurs"/>
+
+<div class="centre">
+  <div ngbDropdown class="d-inline-block">
+    <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+      Обрати операцію
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+      <button (click)="switchMode('create')" [disabled]="isMode('create')" ngbDropdownItem>Створити</button>
+      <button (click)="switchMode('update')" [disabled]="isMode('update')" ngbDropdownItem>Редагувати</button>
+      <button (click)="switchMode('delete')" [disabled]="isMode('delete')" ngbDropdownItem>Видалити</button>
+    </div>
+  </div>
+</div>
+
+<div [ngSwitch]="modeType">
+  <div *ngSwitchCase="'create'">
+    <app-create-dinosaurs (onSubmit)="reload()"/>
+  </div>
+  <div *ngSwitchCase="'update'">
+    <app-edit-dinosaurs (onSubmit)="reload()"/>
+  </div>
+  <div *ngSwitchCase="'delete'">
+    <app-delete-dinosaurs (onDelete)="reload()"/>
+  </div>
+  <div *ngSwitchDefault></div>
+</div>
+
+
+<router-outlet/>

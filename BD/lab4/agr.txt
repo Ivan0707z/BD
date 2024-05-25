@@ -1,0 +1,110 @@
+Підрахувати кількість користувачів у базі даних:
+db.users.aggregate([
+    { $count: "total_users" }
+])
+
+Вибрати усі унікальні імена користувачів:
+db.users.aggregate([
+    { $group: { _id: "$username" } },
+    { $project: { _id: 0, username: "$_id" } }
+])
+
+Знайти користувачів, які мають однаковий email:
+db.users.aggregate([
+    { $group: { _id: "$email", count: { $sum: 1 } } },
+    { $match: { count: { $gt: 1 } } }
+])
+
+Порахувати середню довжину паролів користувачів:
+db.users.aggregate([
+    { $group: { _id: null, avgPasswordLength: { $avg: { $strLenCP: "$password" } } } }
+])
+
+Знайти користувачів з найбільшою кількістю символів у паролі:
+db.users.aggregate([
+    { $project: { username: 1, passwordLength: { $strLenCP: "$password" } } },
+    { $sort: { passwordLength: -1 } },
+    { $limit: 5 }
+])
+
+Знайти користувачів з найкоротшими іменами:
+db.users.aggregate([
+    { $project: { username: 1, nameLength: { $strLenCP: "$username" } } },
+    { $sort: { nameLength: 1 } },
+    { $limit: 5 }
+])
+
+Вибрати унікальні емейли користувачів, які мають більше одного запису:
+db.users.aggregate([
+    { $group: { _id: "$email", count: { $sum: 1 } } },
+    { $match: { count: { $gt: 1 } } }
+])
+
+Знайти користувачів, які мають паролі, що починаються з певної літери:
+db.users.aggregate([
+    { $match: { password: /^A/i } }
+])
+
+Порахувати кількість користувачів з кожної електронною адресою:
+db.users.aggregate([
+    { $group: { _id: "$email", count: { $sum: 1 } } }
+])
+
+Знайти користувачів, які мають паролі, що складаються тільки з цифр:
+db.users.aggregate([
+    { $match: { password: { $regex: "^[0-9]+$" } } }
+])
+
+Вибрати користувачів з найбільшими id:
+db.users.aggregate([
+    { $sort: { user_id: -1 } },
+    { $limit: 5 }
+])
+
+Знайти середню довжину імен користувачів:
+db.users.aggregate([
+    { $group: { _id: null, avgNameLength: { $avg: { $strLenCP: "$username" } } } }
+])
+
+Знайти користувачів з однаковими іменами та email-ами:
+db.users.aggregate([
+    { $group: { _id: { username: "$username", email: "$email" }, count: { $sum: 1 } } },
+    { $match: { count: { $gt: 1 } } }
+])
+
+Порахувати кількість користувачів з кожним іменем:
+db.users.aggregate([
+    { $group: { _id: "$username", count: { $sum: 1 } } }
+])
+
+Знайти користувачів з email, що містять певну підстроку:
+db.users.aggregate([
+    { $match: { email: { $regex: /example\.com$/ } } }
+])
+
+Порахувати кількість користувачів, у яких довжина імені перевищує певне значення:
+db.users.aggregate([
+    { $project: { username: 1, nameLength: { $strLenCP: "$username" } } },
+    { $match: { nameLength: { $gt: 10 } } }
+])
+
+Знайти користувачів, які мають email з певного домену:
+db.users.aggregate([
+    { $match: { email: { $regex: /@example\.com$/ } } }
+])
+
+Вибрати користувачів з паролями, які містять певну підстроку:
+db.users.aggregate([
+    { $match: { password: { $regex: /123/ } } }
+])
+
+Знайти користувачів, які зареєстровані впродовж певного періоду:
+db.users.aggregate([
+    { $match: { registration_date: { $gte: ISODate("2024-01-01"), $lt: ISODate("2024-02-01") } } }
+])
+
+Вибрати користувачів з найменшим id:
+db.users.aggregate([
+    { $sort: { user_id: 1 } },
+    { $limit: 5 }
+])

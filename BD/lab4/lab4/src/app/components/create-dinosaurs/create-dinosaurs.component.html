@@ -1,0 +1,16 @@
+<div class="container">
+  <h2>Create new user</h2>
+
+  <form (ngSubmit)="createDino()">
+    <label for="name">username:</label>
+    <input type="text" id="name" required [(ngModel)]="newDino.username" />
+
+    <label for="type">email:</label>
+    <input type="text" id="type" required [(ngModel)]="newDino.email" />
+
+    <label for="age">password:</label>
+    <input type="text" id="age" required [(ngModel)]="newDino.password" />
+
+    <button type="submit">Create</button>
+  </form>
+</div>
