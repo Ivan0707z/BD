@@ -1,0 +1,19 @@
+<div class="container">
+  <h2>Edit User</h2>
+
+  <form (ngSubmit)="editUser()">
+    <label for="name">Id:</label>
+    <input type="text" id="id" required [(ngModel)]="saved_id" />
+    
+    <label for="name">username:</label>
+    <input type="text" id="name" required [(ngModel)]="newUser.username" />
+
+    <label for="type">email:</label>
+    <input type="text" id="type" required [(ngModel)]="newUser.email" />
+
+    <label for="age">password:</label>
+    <input type="text" id="age" required [(ngModel)]="newUser.password" />
+
+    <button type="submit">Edit</button>
+  </form>
+</div>

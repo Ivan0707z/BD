@@ -1,34 +1,34 @@
 import {Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
-import {Dinosaur, ModeType} from "./model/model";
+import {Users, ModeType} from "./model/model";
 import {NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
-import {ReadDinosaursComponent} from "./components/read-dinosaurs/read-dinosaurs.component";
-import {DeleteDinosaursComponent} from "./components/delete-dinosaurs/delete-dinosaurs.component";
-import {DinoService} from "./services/dino.service";
-import {CreateDinosaursComponent} from "./components/create-dinosaurs/create-dinosaurs.component";
-import {EditDinosaursComponent} from "./components/edit-dinosaurs/edit-dinosaurs.component";
+import {ReadUsersComponent} from "./components/read-users/read-users.component";
+import {DeleteUsersComponent} from "./components/delete-users/delete-users.component";
+import {UserService} from "./services/user.service";
+import {CreateUserComponent} from "./components/create-users/create-users.component";
+import {EditUsersComponent} from "./components/edit-users/edit-users.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgbDropdownModule, NgSwitch, NgSwitchCase, NgSwitchDefault, ReadDinosaursComponent, DeleteDinosaursComponent, CreateDinosaursComponent, EditDinosaursComponent],
+  imports: [RouterOutlet, NgbDropdownModule, NgSwitch, NgSwitchCase, NgSwitchDefault, ReadUsersComponent, DeleteUsersComponent, CreateUserComponent, EditUsersComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit{
-  dinosaurs: Dinosaur[] = [];
+  users: Users[] = [];
   modeType: ModeType = 'read';
 
-  constructor(private dinoService: DinoService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.getDinosaurs();
+    this.getUsers();
   }
 
-  getDinosaurs(): void {
-    this.dinoService.getDinosaurs()
-      .subscribe(dinosaurs => this.dinosaurs = dinosaurs);
+  getUsers(): void {
+    this.userService.getUsers()
+      .subscribe(users => this.users = users);
   }
 
   switchMode(t: ModeType) {
@@ -40,6 +40,6 @@ export class AppComponent implements OnInit{
   }
 
   reload() {
-    this.getDinosaurs()
+    this.getUsers()
   }
 }

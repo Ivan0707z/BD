@@ -1,4 +1,4 @@
-<app-read-dinosaurs [data]="dinosaurs"/>
+<app-read-users [data]="users"/>
 
 <div class="centre">
   <div ngbDropdown class="d-inline-block">
@@ -15,13 +15,13 @@
 
 <div [ngSwitch]="modeType">
   <div *ngSwitchCase="'create'">
-    <app-create-dinosaurs (onSubmit)="reload()"/>
+    <app-create-users (onSubmit)="reload()"/>
   </div>
   <div *ngSwitchCase="'update'">
-    <app-edit-dinosaurs (onSubmit)="reload()"/>
+    <app-edit-users (onSubmit)="reload()"/>
   </div>
   <div *ngSwitchCase="'delete'">
-    <app-delete-dinosaurs (onDelete)="reload()"/>
+    <app-delete-users (onDelete)="reload()"/>
   </div>
   <div *ngSwitchDefault></div>
 </div>
